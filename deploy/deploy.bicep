@@ -70,7 +70,7 @@ resource openAIUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-
   scope: subscription()
   name: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
 }
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (logicAppType[workflow].type == 'logicAppMulti') {
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: openai
   name: guid(openai.id, logicapp.id)
   properties: {
@@ -79,7 +79,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = i
     principalType: 'ServicePrincipal'
   }
 }
-resource roleAssignmentStd 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (logicAppType[workflow].type == 'logicAppStd') {
+resource roleAssignmentStd 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   scope: openai
   name: guid(openai.id, logicAppStd.id)
   properties: {
@@ -99,7 +99,7 @@ resource azdoConnector 'Microsoft.Web/connections@2016-06-01' = {
   }
   tags: tags
 }
-resource office365Connector 'Microsoft.Web/connections@2016-06-01' = if (logicAppType[workflow].type == 'logicAppMulti') {
+resource office365Connector 'Microsoft.Web/connections@2016-06-01' = {
   name: '${prefix}-office365'
   location: location
   properties: {
@@ -110,7 +110,7 @@ resource office365Connector 'Microsoft.Web/connections@2016-06-01' = if (logicAp
   }
   tags: tags
 }
-resource logicapp 'Microsoft.Logic/workflows@2019-05-01' = if (logicAppType[workflow].type == 'logicAppMulti') {
+resource logicapp 'Microsoft.Logic/workflows@2019-05-01' = {
   name: '${prefix}-logicapp'
   location: location
   properties: {
@@ -140,7 +140,7 @@ resource logicapp 'Microsoft.Logic/workflows@2019-05-01' = if (logicAppType[work
   }
   tags: tags
 }
-resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = if (logicAppType[workflow].type == 'logicAppStd') {
+resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = {
   sku: {
     name: skuName
     tier: skuTier
@@ -150,7 +150,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = if (logicAppTy
   location: location
   tags: tags
 }
-resource appServicePlan 'Microsoft.Web/serverfarms@2018-02-01' = if (logicAppType[workflow].type == 'logicAppStd') {
+resource appServicePlan 'Microsoft.Web/serverfarms@2018-02-01' = {
   name: appServicePlanName
   location: location
   tags: tags
@@ -160,7 +160,7 @@ resource appServicePlan 'Microsoft.Web/serverfarms@2018-02-01' = if (logicAppTyp
   }
   kind: 'windows'
 }
-resource logicAppStd 'Microsoft.Web/sites@2018-11-01' = if (logicAppType[workflow].type == 'logicAppStd') {
+resource logicAppStd 'Microsoft.Web/sites@2018-11-01' = {
   name: logicAppStdName
   location: location
   kind: 'workflowapp,functionapp'
