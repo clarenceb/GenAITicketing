@@ -70,12 +70,21 @@ resource openAIUserRoleDefinition 'Microsoft.Authorization/roleDefinitions@2018-
   scope: subscription()
   name: '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd'
 }
-resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+resource roleAssignment 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (logicAppType[workflow].type == 'logicAppMulti') {
   scope: openai
   name: guid(openai.id, logicapp.id)
   properties: {
     roleDefinitionId: openAIUserRoleDefinition.id
     principalId: logicapp.identity.principalId
+    principalType: 'ServicePrincipal'
+  }
+}
+resource roleAssignmentStd 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (logicAppType[workflow].type == 'logicAppStd') {
+  scope: openai
+  name: guid(openai.id, logicAppStd.id)
+  properties: {
+    roleDefinitionId: openAIUserRoleDefinition.id
+    principalId: logicAppStd.identity.principalId
     principalType: 'ServicePrincipal'
   }
 }

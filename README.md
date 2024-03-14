@@ -5,7 +5,7 @@
 
 This is a sample application that demonstrates how to create a simple ticketing system that allows users to submit support requests via freeform e-mail and have them automatically converted into tickets in a ticketing system. The application uses Logic Apps (Standard) for the workflow process and leverages Azure OpenAI (gpt-35-turbo-16k) to generate a structured JSON payload from the e-mail contents.  The JSON payload can then be used to integrate with ticketing systems such as ServiceNow, Jira, or any other system that accepts JSON payloads.  This sample uses Azure DevOps with custom fields on the Bug work item type.
 
-The workflow `ticketprocess` accepts an email as JSON in the form:
+The workflow `apitoazdo` accepts an email as JSON via a HTTP API call in the form:
 
 ```json
 {
@@ -17,7 +17,7 @@ The workflow `ticketprocess` accepts an email as JSON in the form:
 }
 ```
 
-You can also update the workflow to use a email trigger instead of a HTTP trigger, for example, the Outlook connector.
+You can also update the workflow to use a email trigger instead of a HTTP trigger, for example, the Outlook connector.  The workflows `emailtoazdo-nomove` and `emailtoazdo-withmove` are examples of how to use the Outlook connector to trigger the workflow (though using Logic Apps Consumption plans).
 
 ![Architecture Diagram](media/diagram.png)
 

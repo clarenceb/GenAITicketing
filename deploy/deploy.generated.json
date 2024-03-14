@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.26.54.24096",
-      "templateHash": "11538966644271831752"
+      "templateHash": "3336637799318846951"
     }
   },
   "parameters": {
@@ -466,7 +466,7 @@
     "uniqueNameFormat": "[format('{0}-{{0}}-{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]",
     "logicAppStdName": "[format('{0}-logicappstd', parameters('prefix'))]",
     "appServicePlanName": "[format('{0}-appserviceplan', parameters('prefix'))]",
-    "storageName": "[format('{0}{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]"
+    "storageName": "[substring(format('{0}{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix'))), 0, 24)]"
   },
   "resources": [
     {
@@ -503,6 +503,7 @@
       "tags": "[parameters('tags')]"
     },
     {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppMulti')]",
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2022-04-01",
       "scope": "[format('Microsoft.CognitiveServices/accounts/{0}', format(variables('uniqueNameFormat'), 'openai'))]",
@@ -514,6 +515,22 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Logic/workflows', format('{0}-logicapp', parameters('prefix')))]",
+        "[resourceId('Microsoft.CognitiveServices/accounts', format(variables('uniqueNameFormat'), 'openai'))]"
+      ]
+    },
+    {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppStd')]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "scope": "[format('Microsoft.CognitiveServices/accounts/{0}', format(variables('uniqueNameFormat'), 'openai'))]",
+      "name": "[guid(resourceId('Microsoft.CognitiveServices/accounts', format(variables('uniqueNameFormat'), 'openai')), resourceId('Microsoft.Web/sites', variables('logicAppStdName')))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5e0bd9bd-7b93-4f28-af87-19fc36ad61bd')]",
+        "principalId": "[reference(resourceId('Microsoft.Web/sites', variables('logicAppStdName')), '2018-11-01', 'full').identity.principalId]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/sites', variables('logicAppStdName'))]",
         "[resourceId('Microsoft.CognitiveServices/accounts', format(variables('uniqueNameFormat'), 'openai'))]"
       ]
     },
