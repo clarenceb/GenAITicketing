@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.23.1.45101",
-      "templateHash": "15943683006484814075"
+      "version": "0.26.54.24096",
+      "templateHash": "11538966644271831752"
     }
   },
   "parameters": {
@@ -28,7 +28,8 @@
       "defaultValue": "emailtoazdo-nomove",
       "allowedValues": [
         "emailtoazdo-withmove",
-        "emailtoazdo-nomove"
+        "emailtoazdo-nomove",
+        "apitoazdo"
       ],
       "metadata": {
         "description": "Which variant of the logic app to deploy. \"-withmove\" will move the email once processed, \"-nomove\" will leave the email as-is"
@@ -446,9 +447,26 @@
         }
       }
     },
+    "logicAppType": {
+      "emailtoazdo-withmove": {
+        "type": "logicAppMulti"
+      },
+      "emailtoazdo-nomove": {
+        "type": "logicAppMulti"
+      },
+      "apitoazdo": {
+        "type": "logicAppStd"
+      }
+    },
+    "kind": "StorageV2",
+    "skuName": "Standard_LRS",
+    "skuTier": "Standard",
     "workflowDefinition": "[if(equals(parameters('workflow'), 'emailtoazdo-withmove'), variables('$fxv#0').definition, variables('$fxv#1').definition)]",
     "strippedLocation": "[replace(toLower(parameters('location')), ' ', '')]",
-    "uniqueNameFormat": "[format('{0}-{{0}}-{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]"
+    "uniqueNameFormat": "[format('{0}-{{0}}-{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]",
+    "logicAppStdName": "[format('{0}-logicappstd', parameters('prefix'))]",
+    "appServicePlanName": "[format('{0}-appserviceplan', parameters('prefix'))]",
+    "storageName": "[format('{0}{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]"
   },
   "resources": [
     {
@@ -513,6 +531,7 @@
       "tags": "[parameters('tags')]"
     },
     {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppMulti')]",
       "type": "Microsoft.Web/connections",
       "apiVersion": "2016-06-01",
       "name": "[format('{0}-office365', parameters('prefix'))]",
@@ -526,6 +545,7 @@
       "tags": "[parameters('tags')]"
     },
     {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppMulti')]",
       "type": "Microsoft.Logic/workflows",
       "apiVersion": "2019-05-01",
       "name": "[format('{0}-logicapp', parameters('prefix'))]",
@@ -560,6 +580,93 @@
         "[resourceId('Microsoft.Web/connections', format('{0}-azuredevops', parameters('prefix')))]",
         "[resourceId('Microsoft.Web/connections', format('{0}-office365', parameters('prefix')))]",
         "[resourceId('Microsoft.CognitiveServices/accounts', format(variables('uniqueNameFormat'), 'openai'))]"
+      ]
+    },
+    {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppStd')]",
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2019-06-01",
+      "name": "[variables('storageName')]",
+      "sku": {
+        "name": "[variables('skuName')]",
+        "tier": "[variables('skuTier')]"
+      },
+      "kind": "[variables('kind')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]"
+    },
+    {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppStd')]",
+      "type": "Microsoft.Web/serverfarms",
+      "apiVersion": "2018-02-01",
+      "name": "[variables('appServicePlanName')]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "sku": {
+        "name": "WS1",
+        "tier": "WorkflowStandard"
+      },
+      "kind": "windows"
+    },
+    {
+      "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppStd')]",
+      "type": "Microsoft.Web/sites",
+      "apiVersion": "2018-11-01",
+      "name": "[variables('logicAppStdName')]",
+      "location": "[parameters('location')]",
+      "kind": "workflowapp,functionapp",
+      "identity": {
+        "type": "SystemAssigned"
+      },
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "siteConfig": {
+          "netFrameworkVersion": "v6.0",
+          "appSettings": [
+            {
+              "name": "APP_KIND",
+              "value": "workflowApp"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__id",
+              "value": "Microsoft.Azure.Functions.ExtensionBundle.Workflows"
+            },
+            {
+              "name": "AzureFunctionsJobHost__extensionBundle__version",
+              "value": "[1.*, 2.0.0)"
+            },
+            {
+              "name": "AzureWebJobsStorage",
+              "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix=core.windows.net', variables('storageName'), listKeys(format('{0}/providers/Microsoft.Storage/storageAccounts/{1}', resourceGroup().id, variables('storageName')), '2019-06-01').keys[0].value)]"
+            },
+            {
+              "name": "FUNCTIONS_EXTENSION_VERSION",
+              "value": "~4"
+            },
+            {
+              "name": "FUNCTIONS_WORKER_RUNTIME",
+              "value": "node"
+            },
+            {
+              "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+              "value": "[format('DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};EndpointSuffix=core.windows.net', variables('storageName'), listKeys(format('{0}/providers/Microsoft.Storage/storageAccounts/{1}', resourceGroup().id, variables('storageName')), '2019-06-01').keys[0].value)]"
+            },
+            {
+              "name": "WEBSITE_CONTENTSHARE",
+              "value": "[variables('logicAppStdName')]"
+            },
+            {
+              "name": "WEBSITE_NODE_DEFAULT_VERSION",
+              "value": "~18"
+            }
+          ]
+        },
+        "clientAffinityEnabled": false
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]"
       ]
     }
   ]

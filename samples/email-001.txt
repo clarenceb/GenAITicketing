@@ -1,0 +1,30 @@
+From: Margaret Wilson
+Sent: Thursday, November 9, 2023 1:09:17 PM
+To: Support Mailbox <supportmailbox@SupportMailBox123.onmicrosoft.com>
+Subject: Web Issue
+ 
+Dear Support Team,
+ 
+I hope you are doing well. I am writing to report an issue that our web application is currently facing. This issue is causing significant disruption to our users and is affecting our ability to provide essential services.
+Our users are encountering an error when attempting to log in to our web application. The error message they are receiving is as follows:
+ 
+ERROR: Invalid JWT Token
+Stack Trace:
+  at com.example.security.JwtTokenValidator.validateToken(JwtTokenValidator.java:72)
+  at com.example.controller.LoginController.login(LoginController.java:98)
+  at com.example.webapp.LoginPage.processLogin(LoginPage.java:125)
+  at com.example.webapp.LoginPage.handleRequest(LoginPage.java:85)
+  ...
+This error has been consistently appearing for the past 24 hours, and we have been unable to identify the root cause.
+ 
+Users are unable to log in to our application, which is preventing them from accessing our services and performing essential tasks. This issue is affecting the integrity of user data stored within our application, as it is preventing proper authentication and authorization checks.
+The error is causing significant service disruption and is negatively impacting our reputation with users.
+ 
+The critical nature of this issue and its immediate impact on our users require your urgent attention.
+ 
+Thank you for your prompt attention to this issue.
+ 
+Sincerely,
+
+Margaret
+Project Manager, Team Autobots

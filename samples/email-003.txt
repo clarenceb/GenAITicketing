@@ -1,0 +1,32 @@
+From: Sarah Thompson
+Sent: Thursday, November 9, 2023 3:30:12 PM
+To: Support Mailbox supportmailbox@SupportMailBox123.onmicrosoft.com
+Subject: Leave Request App - Java Exception Error
+
+Dear Support Team,
+
+I hope this email finds you well. I am writing to report a critical issue that our leave request application is currently experiencing. When employees attempt to submit their leave requests, the application throws a Java exception error, preventing the submission process from completing successfully.
+
+The error message that our employees are encountering is as follows:
+
+ERROR: Java Exception - Null Pointer Exception
+Stack Trace:
+at com.example.leaverequest.LeaveRequestProcessor.processLeave(LeaveRequestProcessor.java:123)
+at com.example.controller.LeaveRequestController.submitLeave(LeaveRequestController.java:456)
+at com.example.webapp.LeaveRequestPage.handleFormSubmission(LeaveRequestPage.java:789)
+...
+
+This error has been consistently appearing over the past few days, and we have been unable to identify the root cause. As a result, employees are unable to submit their leave requests through the application, causing confusion and inconvenience for both employees and managers.
+
+The leave request application is a critical tool for managing our employees' time off, and this issue is hindering our ability to accurately track and approve leave requests. It is important to note that this issue is not limited to a specific user or browser; it affects all users across different browsers and devices.
+
+We have already attempted some basic troubleshooting steps, such as clearing browser cache and cookies, but these measures have not resolved the issue. Given the urgency and impact on our leave management process, we request your immediate attention and assistance in resolving this issue.
+
+If there are any specific logs or information that you require from our end to help diagnose and rectify the problem, please let us know, and we will provide them promptly.
+
+Thank you for your prompt attention to this matter. We appreciate your support in resolving this issue as soon as possible.
+
+Best regards,
+
+Sarah Thompson
+HR Manager
