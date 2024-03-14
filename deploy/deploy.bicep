@@ -38,7 +38,7 @@ var uniqueNameFormat = '${prefix}-{0}-${uniqueString(resourceGroup().id, prefix)
 
 var logicAppStdName = '${prefix}-logicappstd'
 var appServicePlanName = '${prefix}-appserviceplan'
-var storageName = '${prefix}${uniqueString(resourceGroup().id, prefix)}'
+var storageName = substring('${prefix}${uniqueString(resourceGroup().id, prefix)}', 0, 24)
 
 resource openai 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: format(uniqueNameFormat, 'openai')
