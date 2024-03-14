@@ -38,7 +38,7 @@ var uniqueNameFormat = '${prefix}-{0}-${uniqueString(resourceGroup().id, prefix)
 
 var logicAppStdName = '${prefix}-logicappstd'
 var appServicePlanName = '${prefix}-appserviceplan'
-var storageName = substring('${prefix}${uniqueString(resourceGroup().id, prefix)}', 0, 24)
+var storageName = '${prefix}${uniqueString(resourceGroup().id, prefix)}'
 
 resource openai 'Microsoft.CognitiveServices/accounts@2023-05-01' = {
   name: format(uniqueNameFormat, 'openai')
@@ -146,7 +146,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2019-06-01' = if (logicAppTy
     tier: skuTier
   }
   kind: kind
-  name: storageName
+  name: substring('${storageName}', 0, 24)
   location: location
   tags: tags
 }
