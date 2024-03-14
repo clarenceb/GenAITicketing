@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.26.54.24096",
-      "templateHash": "3336637799318846951"
+      "templateHash": "3922217233657240283"
     }
   },
   "parameters": {
@@ -466,7 +466,9 @@
     "uniqueNameFormat": "[format('{0}-{{0}}-{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]",
     "logicAppStdName": "[format('{0}-logicappstd', parameters('prefix'))]",
     "appServicePlanName": "[format('{0}-appserviceplan', parameters('prefix'))]",
-    "storageName": "[substring(format('{0}{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix'))), 0, 24)]"
+    "storageName": "[format('{0}{1}', parameters('prefix'), uniqueString(resourceGroup().id, parameters('prefix')))]",
+    "storageNameLength": "[min(length(format('{0}', variables('storageName'))), 24)]",
+    "storageNameTrunc": "[substring(format('{0}', variables('storageName')), 0, variables('storageNameLength'))]"
   },
   "resources": [
     {
@@ -603,7 +605,7 @@
       "condition": "[equals(variables('logicAppType')[parameters('workflow')].type, 'logicAppStd')]",
       "type": "Microsoft.Storage/storageAccounts",
       "apiVersion": "2019-06-01",
-      "name": "[variables('storageName')]",
+      "name": "[variables('storageNameTrunc')]",
       "sku": {
         "name": "[variables('skuName')]",
         "tier": "[variables('skuTier')]"
@@ -683,7 +685,7 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Web/serverfarms', variables('appServicePlanName'))]",
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]"
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageNameTrunc'))]"
       ]
     }
   ]
