@@ -36,5 +36,5 @@ Alternatively, you can deploy the solution from the CLI:
 
 az login
 az group create --name <resource-group-name> --location <location>
-az deployment group create --resource-group <resource-group-name> --template-file deploy\deploy.generated.json --parameters deploy\deploy.parameters.json
+az deployment group create --resource-group <resource-group-name> --template-file deploy\deploy.generated.json
 ```
