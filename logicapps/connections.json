@@ -2,21 +2,25 @@
   "managedApiConnections": {
     "visualstudioteamservices": {
       "api": {
-        "id": "/subscriptions/@parameter('subscriptionId')/providers/Microsoft.Web/locations/@parameter('location')/managedApis/visualstudioteamservices"
+        "id": "/subscriptions/@appsetting('WORKFLOWS_SUBSCRIPTION_ID')/providers/Microsoft.Web/locations/australiaeast/managedApis/visualstudioteamservices"
       },
       "connection": {
-        "id": "/subscriptions/@parameter('subscriptionId')/resourceGroups/@parameter('resourceGroup')/providers/Microsoft.Web/connections/visualstudioteamservices"
+        "id": "/subscriptions/@appsetting('WORKFLOWS_SUBSCRIPTION_ID')/resourceGroups/@appsetting('WORKFLOWS_RESOURCE_GROUP_NAME')/providers/Microsoft.Web/connections/visualstudioteamservices"
       },
-      "connectionRuntimeUrl": "@parameter('azdoConnectionRuntimeUrl')",
-      "authentication": "@appsetting('visualstudioteamservices-auth')",
+      "connectionRuntimeUrl": "@appsetting('azdoConnectionRuntimeUrl')",
+      "authentication": {
+          "scheme": "Key",
+          "parameter": "@appsetting('visualstudioteamservices-connectionKey')",
+          "type": "Raw"
+      },
       "displayName": "visualstudioteamservices"
     }
   },
   "serviceProviderConnections": {
     "openai": {
       "parameterValues": {
-        "openAIEndpoint": "@parameter('openAIEndpoint')",
-        "openAIKey": "@parameter('openAIKey')"
+        "openAIEndpoint": "@appsetting('openAIEndpoint')",
+        "openAIKey": "@appsetting('openAIKey')"
       },
       "parameterSetName": "KeyAndEndpointConnection",
       "serviceProvider": {

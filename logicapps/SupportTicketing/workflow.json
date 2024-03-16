@@ -92,7 +92,7 @@
                     },
                     "host": {
                         "connection": {
-                            "referenceName": "visualstudioteamservices-1"
+                            "referenceName": "visualstudioteamservices"
                         }
                     },
                     "method": "patch",

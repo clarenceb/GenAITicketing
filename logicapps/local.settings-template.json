@@ -11,6 +11,8 @@
     "openAIKey": "<your-aoai-key>",
     "openAIEndpoint": "https://<your-aoai>.openai.azure.com/",
     "visualstudioteamservices-connectionKey": "<your-jwt-auth>",
-    "azdoConnectionRuntimeUrl": "<your-azdo-connection-runtime-url>"
+    "azdoConnectionRuntimeUrl": "<your-azdo-connection-runtime-url>",
+    "devopsOrganisation": "<your-org>",
+    "devopsProject": "<your-project>"
   }
 }

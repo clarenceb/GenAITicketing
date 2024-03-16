@@ -40,11 +40,12 @@ az group create --name <resource-group-name> --location <location>
 az deployment group create --resource-group <resource-group-name> --template-file deploy\infra\deploy.bicep
 
 cd logicapps/
-zip -r logicapps.zip . -x *local.settings.json
+del logicapps.zip
+zip -r logicapps.zip . -x *local.settings.json -x *azureconfig.json
 az functionapp deploy --resource-group <resource-group-name> --name ticket-logicappstd --src-path logicapps.zip --type zip
 ```
 
-Create a file `azureconfig` with the following content:
+Create a file `azureconfig.json` with the following content:
 
 ```json
 {
@@ -54,12 +55,14 @@ Create a file `azureconfig` with the following content:
     "openAIKey": "<your-aoai-key>",
     "openAIEndpoint": "https://<your-aoai>.openai.azure.com/",
     "visualstudioteamservices-connectionKey": "<jwt-auth-token>",
-    "azdoConnectionRuntimeUrl": "<your-azdoConnectionRuntimeUrl>"
+    "azdoConnectionRuntimeUrl": "<your-azdoConnectionRuntimeUrl>",
+    "devopsOrganisation": "<your-org>",
+    "devopsProject": "<your-project>"
 }
 ```
 
 Apply the app settings file:
 
 ```sh
-az webapp config appsettings set -g MyResourceGroup -n MyUniqueApp --settings @azureconfig.json
+az webapp config appsettings set -g <resource-group-name> -n ticket-logicappstd --settings @azureconfig.json
 ```
