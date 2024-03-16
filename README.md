@@ -25,6 +25,15 @@ You can also update the workflow to use a email trigger instead of a HTTP trigge
 
 TODO
 
+## Setup Local Environment / VSCode
+
+* Install Node v18.19.x+
+* Install Azure Functions Core Tools 4.x
+* Install Azure Logic Apps (Standard) extension for VSCode
+* Install Azurite extension for VSCode
+* Install REST Client extension for VSCode (optional)
+* Install Bicep extension for VSCode (optional)
+
 ## Deployment
 
 Click the **Deploy to Azure** button above to deploy the solution to your Azure subscription.
@@ -33,11 +42,14 @@ Alternatively, you can deploy the solution from the CLI:
 
 ```ps1
 # Optional: Generate the deployment ARM template for use with GitHub "Deploy to Azure" button
+cd deploy\infra\
 .\generate.ps1
 
 az login
 az group create --name <resource-group-name> --location <location>
-az deployment group create --resource-group <resource-group-name> --template-file deploy\infra\deploy.bicep
+az deployment group create --resource-group <resource-group-name> --template-file .\deploy.bicep
+
+cd ..\..
 
 cd logicapps/
 del logicapps.zip
@@ -66,3 +78,16 @@ Apply the app settings file:
 ```sh
 az webapp config appsettings set -g <resource-group-name> -n ticket-logicappstd --settings @azureconfig.json
 ```
+
+## Run the workflow
+
+You may need to update the connect to Azure DevOps as it's linked to a personal account.
+
+Get the Workflow URL and then make a rest call to the endpoint:
+
+```pwsh
+curl -X POST -H "Content-Type: application/json" -d @samples\email-001.json "<workflow-url>" | jq .
+```
+
+Or open the `genai-ticketing.http` file in VSCode and use the REST client extension to send the request(s).
+You'll need to create a `.env` file (see `.env-template`) with the required variables.

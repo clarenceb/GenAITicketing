@@ -1,0 +1,35 @@
+@workflow_url = {{$dotenv workflow_url}}
+
+###
+
+POST {{workflow_url}} HTTP/1.1
+content-type: application/json
+
+< samples/email-001.json
+
+###
+
+POST {{workflow_url}} HTTP/1.1
+content-type: application/json
+
+< samples/email-002.json
+
+###
+POST {{workflow_url}} HTTP/1.1
+content-type: application/json
+
+< samples/email-003.json
+
+###
+POST {{workflow_url}} HTTP/1.1
+content-type: application/json
+
+< samples/email-004.json
+
+###
+POST {{workflow_url}} HTTP/1.1
+content-type: application/json
+
+< samples/email-005.json
+
+###
