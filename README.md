@@ -56,6 +56,7 @@ Create a file `azureconfig` with the following content:
     "visualstudioteamservices-connectionKey": "<jwt-auth-token>",
     "azdoConnectionRuntimeUrl": "<your-azdoConnectionRuntimeUrl>"
 }
+```
 
 Apply the app settings file:
 
