@@ -7,3 +7,4 @@ local.settings.json
 __azurite_*
 __blobstorage__
 __queuestorage__
+logicapps.zip
