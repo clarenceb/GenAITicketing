@@ -1,0 +1,28 @@
+{
+  "managedApiConnections": {
+    "visualstudioteamservices": {
+      "api": {
+        "id": "/subscriptions/@parameter('subscriptionId')/providers/Microsoft.Web/locations/@parameter('location')/managedApis/visualstudioteamservices"
+      },
+      "connection": {
+        "id": "/subscriptions/@parameter('subscriptionId')/resourceGroups/@parameter('resourceGroup')/providers/Microsoft.Web/connections/visualstudioteamservices"
+      },
+      "connectionRuntimeUrl": "@parameter('azdoConnectionRuntimeUrl')",
+      "authentication": "@appsetting('visualstudioteamservices-auth')",
+      "displayName": "visualstudioteamservices"
+    }
+  },
+  "serviceProviderConnections": {
+    "openai": {
+      "parameterValues": {
+        "openAIEndpoint": "@parameter('openAIEndpoint')",
+        "openAIKey": "@parameter('openAIKey')"
+      },
+      "parameterSetName": "KeyAndEndpointConnection",
+      "serviceProvider": {
+        "id": "/serviceProviders/openai"
+      },
+      "displayName": "openai"
+    }
+  }
+}

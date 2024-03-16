@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "WORKFLOWS_TENANT_ID": "<your-tenant>",
+    "WORKFLOWS_SUBSCRIPTION_ID": "<your-sub>",
+    "WORKFLOWS_RESOURCE_GROUP_NAME": "<you-rg>",
+    "WORKFLOWS_LOCATION_NAME": "<your-location>",
+    "WORKFLOWS_MANAGEMENT_BASE_URI": "https://management.azure.com/",
+    "openAIKey": "<your-aoai-key>",
+    "openAIEndpoint": "https://<your-aoai>.openai.azure.com/",
+    "visualstudioteamservices-connectionKey": "<your-jwt-auth>",
+    "azdoConnectionRuntimeUrl": "<your-azdo-connection-runtime-url>"
+  }
+}

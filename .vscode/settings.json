@@ -1,0 +1,9 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/clarence/.azurelogicapps/dependencies/DotNetSDK:${env:PATH}"
+    },
+    "omnisharp.dotNetCliPaths": [
+        "/home/clarence/.azurelogicapps/dependencies/DotNetSDK"
+    ],
+    "azureLogicAppsStandard.projectSubpath": ".\\logicapps\\"
+}
