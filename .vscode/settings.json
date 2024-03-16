@@ -1,9 +1,15 @@
 {
     "terminal.integrated.env.linux": {
-        "PATH": "/home/clarence/.azurelogicapps/dependencies/DotNetSDK:${env:PATH}"
+        "PATH": "${env:HOME}/.azurelogicapps/dependencies/DotNetSDK:${env:PATH}"
     },
     "omnisharp.dotNetCliPaths": [
-        "/home/clarence/.azurelogicapps/dependencies/DotNetSDK"
+        "${env:HOME}/.azurelogicapps/dependencies/DotNetSDK"
     ],
-    "azureLogicAppsStandard.projectSubpath": ".\\logicapps\\"
+    "azureLogicAppsStandard.projectSubpath": ".\\logicapps\\",
+    "azureLogicAppsStandard.deploySubpath": "logicapps",
+    "azureLogicAppsStandard.projectLanguage": "JavaScript",
+    "azureLogicAppsStandard.projectRuntime": "~4",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.suppressProject": true,
+    "azurite.location": ""
 }
