@@ -91,3 +91,9 @@ curl -X POST -H "Content-Type: application/json" -d @samples\email-001.json "<wo
 
 Or open the `genai-ticketing.http` file in VSCode and use the REST client extension to send the request(s).
 You'll need to create a `.env` file (see `.env-template`) with the required variables.
+
+## Resources
+
+* [Azure DevOps for Logic Apps (Single-tenant)](https://github.com/Azure/logicapps/blob/master/azure-devops-sample)
+* [GitHub Actions for Logic Apps (Single-tenant)](https://github.com/Azure/logicapps/tree/master/github-sample)
+* [Azure OpenAI and AI Search in-app connectors for Logic Apps (Standard)](https://techcommunity.microsoft.com/t5/azure-integration-services-blog/public-preview-of-azure-openai-and-ai-search-in-app-connectors/ba-p/4049584)
