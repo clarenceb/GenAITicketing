@@ -1,35 +1,41 @@
 @workflow_url = {{$dotenv workflow_url}}
 
 ###
-
+# From: Margaret Wilson
+# Subject: Web Issue
 POST {{workflow_url}} HTTP/1.1
 content-type: application/json
 
 < samples/email-001.json
 
 ###
-
+# From: John Anderson
+# Subject: Slow Computer Performance
 POST {{workflow_url}} HTTP/1.1
 content-type: application/json
 
 < samples/email-002.json
 
 ###
+# From: Sarah Thompson
+# Subject: Leave Request App - Java Exception Error
 POST {{workflow_url}} HTTP/1.1
 content-type: application/json
 
 < samples/email-003.json
 
 ###
+# From: David Johnson
+# Subject: Windows 7 Computer Crash - Blue Screen of Death
 POST {{workflow_url}} HTTP/1.1
 content-type: application/json
 
 < samples/email-004.json
 
 ###
+# From: Emily Roberts
+# Subject: Intermittent Bug - Microsoft Word Crashing
 POST {{workflow_url}} HTTP/1.1
 content-type: application/json
 
 < samples/email-005.json
-
-###
