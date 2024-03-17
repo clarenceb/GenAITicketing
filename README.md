@@ -123,7 +123,7 @@ az webapp config appsettings set -g <resource-group-name> -n ticket-logicappstd 
 
 Post-deployment: You may need to update the Logic Apps connection for Azure DevOps as it's linked to a personal account (Managed Identity and PAT tokens are not supported).
 
-Retrieve the Workflow URL and then make a rest call to the endpoint:
+Retrieve the Workflow URL and then make a rest call to the endpoint using one of the e-mail samples from the `samples/` folder:
 
 ```pwsh
 curl -X POST -H "Content-Type: application/json" -d @samples\email-001.json "<workflow-url>" | jq .
@@ -132,6 +132,10 @@ curl -X POST -H "Content-Type: application/json" -d @samples\email-001.json "<wo
 Or open the `genai-ticketing.http` file in VSCode and use the REST client extension to send the request(s):
 
 * You'll need to create a `.env` file (see `.env-template`) with the required variables.
+
+## E-mail Samples
+
+See the `samples/` folder for e-mail samples that can be used to test the workflow.  The JSON versions must be used with the Logic Apps workflow.
 
 ## Resources
 
